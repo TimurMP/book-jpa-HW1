@@ -62,8 +62,10 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public BookDto updateBook(String isbn, String title) {
-		// TODO Auto-generated method stub
-		return null;
+		Book book = bookRepository.findById(isbn).orElseThrow(EntityNotFoundException::new);
+		book.setTitle(title);
+		bookRepository.save(book);
+		return modelMapper.map(book,BookDto.class);
 	}
 
 	@Override
