@@ -1,21 +1,21 @@
 package telran.java2022.book.service;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.RequiredArgsConstructor;
 import telran.java2022.book.dao.AuthorRepository;
 import telran.java2022.book.dao.BookRepository;
 import telran.java2022.book.dao.PublisherRepository;
 import telran.java2022.book.dto.AuthorDto;
 import telran.java2022.book.dto.BookDto;
+import telran.java2022.book.dto.exceptions.EntityNotFoundException;
 import telran.java2022.book.model.Author;
 import telran.java2022.book.model.Book;
 import telran.java2022.book.model.Publisher;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,8 +46,10 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public BookDto findBookByIsbn(String isbn) {
-		// TODO Auto-generated method stub
-		return null;
+		Book book = bookRepository.findById(isbn).orElseThrow(EntityNotFoundException::new);
+//		book = new Book(book.getIsbn(), book.getTitle(), book.getAuthors(), book.getPublisher().getPublisherName());
+
+		return modelMapper.map(book,BookDto.class);
 	}
 
 	@Override

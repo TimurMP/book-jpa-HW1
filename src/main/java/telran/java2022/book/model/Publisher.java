@@ -1,15 +1,10 @@
 package telran.java2022.book.model;
 
-import java.io.Serializable;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +12,10 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(of = "publisherName")
 @Entity
+//@ToString(includeFieldNames = false, doNotUseGetters = true)
+
+
+
 public class Publisher implements Serializable{
 
 	private static final long serialVersionUID = 5083976659882404642L;
@@ -24,4 +23,10 @@ public class Publisher implements Serializable{
 	@Id
 	String publisherName;
 
+	@Override
+	public String toString() {
+		return publisherName;
+	}
 }
+
+
