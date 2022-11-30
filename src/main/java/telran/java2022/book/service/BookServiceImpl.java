@@ -92,8 +92,15 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Iterable<AuthorDto> findBookAuthors(String isbn) {
-		// TODO Auto-generated method stub
-		return null;
+		Book book = bookRepository.findById(isbn).orElseThrow(EntityNotFoundException::new);
+		return book.getAuthors().stream()
+				.map(author -> modelMapper.map(author, AuthorDto.class))
+				.collect(Collectors.toList());
+
+//		return bookRepository.findById(isbn).stream()
+//				.map(book -> book.getAuthors())
+//				.map(authors -> modelMapper.map(authors, AuthorDto.class))
+//				.collect(Collectors.toList());
 	}
 
 	@Override
