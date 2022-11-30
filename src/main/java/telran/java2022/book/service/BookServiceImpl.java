@@ -14,6 +14,7 @@ import telran.java2022.book.model.Author;
 import telran.java2022.book.model.Book;
 import telran.java2022.book.model.Publisher;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Transactional
 	public BookDto removeBook(String isbn) {
 		Book book = bookRepository.findById(isbn).orElseThrow(EntityNotFoundException::new);
 		BookDto bookDto = modelMapper.map(book,BookDto.class);
@@ -69,9 +71,14 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Iterable<BookDto> findBooksByAuthor(String authorName) {
-		// TODO Auto-generated method stub
-		return null;
+		Author author = authorRepository.findById(authorName).orElseThrow(EntityNotFoundException::new);
+		Set<Author>	authors = new HashSet<>();
+		authors.add(author);
+		return bookRepository.findAllByAuthorsIsIn(authors)
+				.map(book -> modelMapper.map(book, BookDto.class))
+				.collect(Collectors.toList());
 	}
 
 	@Override
