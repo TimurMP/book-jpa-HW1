@@ -9,6 +9,7 @@ import telran.java2022.book.dao.BookRepository;
 import telran.java2022.book.dao.PublisherRepository;
 import telran.java2022.book.dto.AuthorDto;
 import telran.java2022.book.dto.BookDto;
+import telran.java2022.book.dto.exceptions.AuthorHasBooks;
 import telran.java2022.book.dto.exceptions.EntityNotFoundException;
 import telran.java2022.book.model.Author;
 import telran.java2022.book.model.Book;
@@ -118,13 +119,17 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
 
 
-
     }
 
     @Override
+    @Transactional
     public AuthorDto removeAuthor(String authorName) {
-        // TODO Auto-generated method stub
-        return null;
+        if (findBooksByAuthor(authorName).spliterator().getExactSizeIfKnown() != 0) {
+            throw new AuthorHasBooks();
+        }
+        Author author = authorRepository.findById(authorName).orElseThrow(EntityNotFoundException::new);
+        authorRepository.delete(author);
+        return modelMapper.map(author, AuthorDto.class);
     }
 
 }
