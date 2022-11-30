@@ -8,14 +8,14 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ServiceConfiguration {
-	@Bean
-	public ModelMapper getModelMapper() {
-		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.getConfiguration()
-					.setFieldMatchingEnabled(true)
-					.setFieldAccessLevel(AccessLevel.PRIVATE)
-					.setMatchingStrategy(MatchingStrategies.STRICT);
-		return modelMapper;
-	}
-	
+    @Bean
+    public ModelMapper getModelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration()
+                .setFieldMatchingEnabled(true)
+                .setFieldAccessLevel(AccessLevel.PRIVATE)
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
+
 }

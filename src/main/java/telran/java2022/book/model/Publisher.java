@@ -15,18 +15,17 @@ import java.io.Serializable;
 //@ToString(includeFieldNames = false, doNotUseGetters = true)
 
 
+public class Publisher implements Serializable {
 
-public class Publisher implements Serializable{
+    private static final long serialVersionUID = 5083976659882404642L;
 
-	private static final long serialVersionUID = 5083976659882404642L;
-	
-	@Id
-	String publisherName;
+    @Id
+    String publisherName;
 
-	@Override
-	public String toString() {
-		return publisherName;
-	}
+    @Override
+    public String toString() {
+        return publisherName;
+    }
 }
 
 

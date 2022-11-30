@@ -10,13 +10,10 @@ import java.util.stream.Stream;
 
 public interface BookRepository extends CrudRepository<Book, String> {
 
-//    @Query("select b from Book b join Author a where a.name = ?1")
+    //    @Query("select b from Book b join Author a where a.name = ?1")
     Stream<Book> findAllByAuthorsIsIn(Set<Author> authors);
 
     Stream<Book> findBooksByPublisher(Publisher publisher);
-
-
-
 
 
 }
